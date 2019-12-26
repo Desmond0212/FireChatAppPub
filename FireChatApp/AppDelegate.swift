@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //Google Firebase
+        FirebaseApp.configure()
+        UITabBar.appearance().barTintColor = .white
+        
+        Thread.sleep(forTimeInterval: 2.0)
+        
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        let navController = UINavigationController(rootViewController: LoginViewController())
+        navController.navigationBar.barStyle = .black
+        window?.rootViewController = navController
+        
         return true
     }
 
