@@ -19,33 +19,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Power By" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyq-oj-pvr">
-                                <rect key="frame" x="80" y="792" width="254" height="21"/>
+                                <rect key="frame" x="80" y="797" width="254" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DESMOND WONG" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1lG-em-Yyw">
                                 <rect key="frame" x="80" y="823" width="254" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fire Chat App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-5y-N42">
-                                <rect key="frame" x="20" y="424" width="374" height="48"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <color key="textColor" red="0.74946462563451777" green="0.1121130210783832" blue="0.0064752121226775688" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FireChat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-5y-N42">
+                                <rect key="frame" x="20" y="418" width="374" height="60"/>
+                                <fontDescription key="fontDescription" name="HoeflerText-Black" family="Hoefler Text" pointSize="60"/>
+                                <color key="textColor" red="0.74946462560000005" green="0.1121130211" blue="0.0064752121230000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.11748389150000001" green="0.1213654056" blue="0.13381612300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zda-5y-N42" secondAttribute="trailing" constant="20" id="4Ne-dM-D9Q"/>
+                            <constraint firstItem="Zda-5y-N42" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="7zy-Rn-1RJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1lG-em-Yyw" secondAttribute="bottom" constant="15" id="Gjt-CV-fhr"/>
-                            <constraint firstItem="Zda-5y-N42" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="RVX-md-XAe"/>
-                            <constraint firstItem="Zda-5y-N42" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="TwM-ta-lDu"/>
-                            <constraint firstItem="Zda-5y-N42" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="XUP-ji-W22"/>
+                            <constraint firstItem="Zda-5y-N42" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KjJ-EV-9f4"/>
+                            <constraint firstItem="Zda-5y-N42" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="UiO-C0-IuX"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zda-5y-N42" secondAttribute="trailing" constant="20" id="Vv1-Yt-13N"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iyq-oj-pvr" secondAttribute="trailing" constant="80" id="dEe-ll-48V"/>
-                            <constraint firstItem="1lG-em-Yyw" firstAttribute="top" secondItem="iyq-oj-pvr" secondAttribute="bottom" constant="10" id="e8Z-ZY-Wfw"/>
+                            <constraint firstItem="1lG-em-Yyw" firstAttribute="top" secondItem="iyq-oj-pvr" secondAttribute="bottom" constant="5" id="e8Z-ZY-Wfw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1lG-em-Yyw" secondAttribute="trailing" constant="80" id="h1o-CJ-HC6"/>
                             <constraint firstItem="iyq-oj-pvr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="xeZ-Mt-roJ"/>
                             <constraint firstItem="1lG-em-Yyw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="yUl-gb-7bl"/>
@@ -55,7 +55,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
     </scenes>
 </document>

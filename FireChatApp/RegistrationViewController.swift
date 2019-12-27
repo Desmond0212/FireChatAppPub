@@ -189,8 +189,8 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     
     @objc func handleShowLogin()
     {
-//        let loginController = LoginViewController()
-//        self.present(loginController, animated: true, completion: nil)
+        //let loginController = LoginViewController()
+        //self.present(loginController, animated: true, completion: nil)
         //navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
@@ -265,7 +265,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     func registerUserIntoDatabaseWithUID(uid: String, values: [String: AnyObject])
     {
         //When Successfully Created User to Firebase Database.
-        let ref = Database.database().reference()//(fromURL: "https://swiftchattingapp.firebaseio.com/")
+        let ref = Database.database().reference()
         let usersReference = ref.child("Users").child(uid)
         
         usersReference.updateChildValues(values, withCompletionBlock: {(err, ref) in
@@ -280,7 +280,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                 
                 let user = User(dictionary: values)
                 self.messageViewController?.setupNavBarWithUser(user: user)
-                self.dismiss(animated: true, completion: nil)
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         })
     }

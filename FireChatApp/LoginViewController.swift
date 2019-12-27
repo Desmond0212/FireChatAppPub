@@ -30,8 +30,8 @@ class LoginViewController: UIViewController
     
     let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "chat_icon8")
-        iv.layer.cornerRadius = 16
+        iv.image = #imageLiteral(resourceName: "profile_image_1")
+        iv.layer.cornerRadius = 24
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -141,11 +141,8 @@ class LoginViewController: UIViewController
             passwordTextField.text = ""
         }
         
-        print("Desmond Debug ahndleShowSignup")
-        
         let registerController = RegistrationViewController()
         self.present(registerController, animated: true, completion: nil)
-        //navigationController?.pushViewController(RegistrationViewController(), animated: true)
     }
     
     func logUserIn(withEmail email: String, password: String)
@@ -161,15 +158,8 @@ class LoginViewController: UIViewController
             {
                 guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
                 guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
-
-                //controller.configureViewComponents()
-
-                // forgot to add this in video
-                //controller.loadUserData()
                 
-//                self.messageViewController?.fetchUserAndSetupNavBarTitle()
                 controller.fetchUserAndSetupNavBarTitle()
-                
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -182,11 +172,11 @@ class LoginViewController: UIViewController
         UITabBar.appearance().barTintColor = .white
         
         view.addSubview(logoImageView)
-        logoImageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 100, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 100)
+        logoImageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 80, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 150)
         logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         view.addSubview(emailContainerView)
-        emailContainerView.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
+        emailContainerView.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 25, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
         
         view.addSubview(passwordContainerView)
         passwordContainerView.anchor(top: emailContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 16, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
