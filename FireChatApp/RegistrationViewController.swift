@@ -189,9 +189,6 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     
     @objc func handleShowLogin()
     {
-        //let loginController = LoginViewController()
-        //self.present(loginController, animated: true, completion: nil)
-        //navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
     
@@ -239,26 +236,6 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                     }
                 })
             }
-            
-            /*let values = ["email": email, "username": username]
-            
-            Database.database().reference().child("users").child(uid).updateChildValues(values, withCompletionBlock: { (error, ref) in
-                if let error = error
-                {
-                    print("Failed to update database values with error: ", error.localizedDescription)
-                    return
-                }
-                
-                guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
-                guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
-                
-                /*controller.configureViewComponents()*/
-                
-                // forgot to add this in video
-                /*controller.loadUserData()*/
-                
-                self.dismiss(animated: true, completion: nil)
-            })*/
         }
     }
     
@@ -312,12 +289,6 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         
         view.addSubview(loginButton)
         loginButton.anchor(top: passwordContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
-        
-        //        view.addSubview(dividerView)
-        //        dividerView.anchor(top: loginButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
-        //
-        //        view.addSubview(googleLoginButton)
-        //        googleLoginButton.anchor(top: dividerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
         
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 32, paddingBottom: 12, paddingRight: 32, width: 0, height: 50)

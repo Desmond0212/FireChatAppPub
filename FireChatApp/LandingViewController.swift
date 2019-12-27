@@ -31,8 +31,6 @@ class LandingViewController: UITableViewController
         navigationItem.rightBarButtonItem?.tintColor = .lightGray
         
         checkIfUserLoggedIn()
-        //observeMessages()
-        //observeUserMessages()
         
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorStyle = .none
@@ -95,12 +93,6 @@ class LandingViewController: UITableViewController
                 if let chatPartnerId = message.chatPartnerId()
                 {
                     self.messagesDictionary[chatPartnerId] = message
-                    /*self.messages = Array(self.messagesDictionary.values)
-                     
-                     //Sorted by Latest Time
-                     self.messages.sort(by: {(message1, message2) -> Bool in
-                     return (message1.timestamp?.int32Value)! > (message2.timestamp?.int32Value)!
-                     })*/
                 }
                 
                 self.attemptReloadOfTable()
@@ -108,35 +100,6 @@ class LandingViewController: UITableViewController
             
         },withCancel: nil)
     }
-    
-    /*func observeMessages()
-     {
-     let ref = Database.database().reference().child("Messages")
-     ref.observe(.childAdded, with: {(snapshot) in
-     
-     if let dictionary = snapshot.value as? [String: AnyObject]
-     {
-     let message = Message(dictionary: dictionary)
-     self.messages.append(message)
-     
-     //Identify Messages by Id.
-     if let toId = message.toId
-     {
-     self.messagesDictionary[toId] = message
-     self.messages = Array(self.messagesDictionary.values)
-     
-     //Sorted by Latest Time
-     self.messages.sort(by: {(message1, message2) -> Bool in
-     return (message1.timestamp?.int32Value)! > (message2.timestamp?.int32Value)!
-     
-     })
-     }
-     }
-     
-     print(snapshot)
-     
-     }, withCancel: nil)
-     }*/
     
     @objc func requestReloadTable()
     {
@@ -160,7 +123,6 @@ class LandingViewController: UITableViewController
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         let message = messages[indexPath.row]
         
@@ -276,8 +238,6 @@ class LandingViewController: UITableViewController
             
             if let dictionary = snapshot.value as? [String: AnyObject]
             {
-                //self.navigationItem.title = dictionary["Username"] as? String
-                
                 let user = User(dictionary: dictionary)
                 self.setupNavBarWithUser(user: user)
             }

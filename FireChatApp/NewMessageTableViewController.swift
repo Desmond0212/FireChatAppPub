@@ -82,24 +82,6 @@ class NewMessageTableViewController: UITableViewController
         
         if let profileImageUrl = user.ProfileImage
         {
-            //To Load Images from Firebase
-            /*let url = URL(string: profileImageUrl)
-             URLSession.shared.dataTask(with: url!) {(data, response, error) in
-             
-             if (error != nil)
-             {
-             print(error!)
-             cell.imageView?.image = UIImage(named: "profile_image_1")
-             return
-             }
-             else
-             {
-             DispatchQueue.main.async(execute: {
-             //cell.imageView?.image = UIImage(data: data!)
-             cell.profileImageView.image = UIImage(data: data!)
-             })
-             }
-             }.resume()*/
             
             cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
         }
