@@ -26,15 +26,27 @@ extension UIViewController
 
 class RegistrationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
+    var messageViewController: LandingViewController?
+    
     let logoImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = #imageLiteral(resourceName: "baseline_add_photo_alternate_white_48pt")
+        iv.image = #imageLiteral(resourceName: "add-profile-image7")
         iv.layer.cornerRadius = 16
         iv.layer.masksToBounds = true
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
         
         return iv
+    }()
+    
+    let uploadImageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Tap to upload profile image"
+        label.font = UIFont.italicSystemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor.lightGray
+        
+        return label
     }()
     
     lazy var emailContainerView: UIView = {
@@ -104,6 +116,17 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame/*UIResponder.keyboardWillChangeFrameNotification*/, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle
+    {
+        return .lightContent
+    }
+    
     //Open Galary to Select Image.
     @objc func requestSelectImage()
     {
@@ -166,7 +189,10 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     
     @objc func handleShowLogin()
     {
-        navigationController?.popViewController(animated: true)
+//        let loginController = LoginViewController()
+//        self.present(loginController, animated: true, completion: nil)
+        //navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     func createUser(withEmail email: String, password: String, username: String)
@@ -206,7 +232,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                             }
                             
                             guard let url = url else { return }
-                            let values = ["Username": username, "Email": email, "ProfileImageUrl": url.absoluteString]
+                            let values = ["Username": username, "Email": email, "ProfileImageUrl": url.absoluteString, "Password": password]
                             
                             self.registerUserIntoDatabaseWithUID(uid: uid, values: values as [String : AnyObject])
                         })
@@ -253,7 +279,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                 print ("Successfully Saved User to Firebase Database!")
                 
                 let user = User(dictionary: values)
-                //self.messageViewController?.setupNavBarWithUser(user: user)
+                self.messageViewController?.setupNavBarWithUser(user: user)
                 self.dismiss(animated: true, completion: nil)
             }
         })
@@ -270,8 +296,13 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         logoImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(requestSelectImage)))
         logoImageView.isUserInteractionEnabled = true
         
+        view.addSubview(uploadImageLabel)
+        uploadImageLabel.anchor(top: logoImageView.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 20)
+        uploadImageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
         view.addSubview(emailContainerView)
-        emailContainerView.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
+        emailContainerView.anchor(top: uploadImageLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)
         
         view.addSubview(usernameContainerView)
         usernameContainerView.anchor(top: emailContainerView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 24, paddingLeft: 32, paddingBottom: 0, paddingRight: 32, width: 0, height: 50)

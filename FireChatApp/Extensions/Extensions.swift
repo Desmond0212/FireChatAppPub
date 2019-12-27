@@ -11,7 +11,6 @@ import UIKit
 
 extension UIView
 {
-    
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat)
     {
         translatesAutoresizingMaskIntoConstraints = false
@@ -87,6 +86,26 @@ extension UIColor
     {
         return UIColor.rgb(red: 220, green: 78, blue: 65)
     }
+    
+    static func bubbleViewColor() -> UIColor
+    {
+        return UIColor.rgb(red:40, green:70, blue:90)
+    }
+    
+    static func lineViewColor() -> UIColor
+    {
+        return UIColor.rgb(red: 220, green: 220, blue:220)
+    }
+    
+    static func bubbleViewBackgroundIN() -> UIColor
+    {
+        return UIColor.rgb(red:240, green:240, blue:240)
+    }
+    
+    static func bubbleViewBackgroundOUT() -> UIColor
+    {
+        return UIColor.rgb(red:40, green:70, blue:90)
+    }
 }
 
 extension UITextField
@@ -101,5 +120,43 @@ extension UITextField
         tf.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         
         return tf
+    }
+}
+
+let imageCahce = NSCache<AnyObject, AnyObject>()
+
+extension UIImageView
+{
+    func loadImageUsingCacheWithUrlString(urlString: String)
+    {
+        //Checking Image's Cahce
+        if let cachedImage = imageCahce.object(forKey: urlString as AnyObject) as? UIImage {
+            self.image = cachedImage
+            return
+        }
+        
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            
+            if (error != nil)
+            {
+                print(error!)
+                self.image = UIImage(named: "profile_image_1")
+                return
+            }
+            else
+            {
+                DispatchQueue.main.async(execute: {
+                    //cell.imageView?.image = UIImage(data: data!)
+                    //self.image = UIImage(data: data!)
+                    
+                    if let downloadedImage = UIImage(data: data!)
+                    {
+                        imageCahce.setObject(downloadedImage, forKey: urlString as AnyObject)
+                        self.image = downloadedImage
+                    }
+                })
+            }
+            }.resume()
     }
 }

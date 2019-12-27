@@ -23,6 +23,13 @@
 		F0A9D7DF23B48714003D5E90 /* FireChatAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D7DE23B48714003D5E90 /* FireChatAppTests.swift */; };
 		F0A9D7EA23B48714003D5E90 /* FireChatAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A9D7E923B48714003D5E90 /* FireChatAppUITests.swift */; };
 		F0A9D7F823B48823003D5E90 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F0A9D7F723B48823003D5E90 /* GoogleService-Info.plist */; };
+		F0B365E023B508B8009F006F /* NewMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B365DF23B508B8009F006F /* NewMessageTableViewController.swift */; };
+		F0B365E223B50905009F006F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B365E123B50905009F006F /* Message.swift */; };
+		F0B365E523B509A5009F006F /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B365E423B509A5009F006F /* UserCell.swift */; };
+		F0BE5ECA23B5AAA800088FC3 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE5EC923B5AAA800088FC3 /* HomeController.swift */; };
+		F0BE5ECC23B5DEA700088FC3 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE5ECB23B5DEA700088FC3 /* ChatLogController.swift */; };
+		F0BE5ECE23B5DF0100088FC3 /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE5ECD23B5DF0100088FC3 /* ChatCollectionViewCell.swift */; };
+		F0BE5ED023B5DF2F00088FC3 /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BE5ECF23B5DF2F00088FC3 /* ChatInputContainerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +78,13 @@
 		F0A9D7E923B48714003D5E90 /* FireChatAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireChatAppUITests.swift; sourceTree = "<group>"; };
 		F0A9D7EB23B48714003D5E90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0A9D7F723B48823003D5E90 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F0B365DF23B508B8009F006F /* NewMessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewController.swift; sourceTree = "<group>"; };
+		F0B365E123B50905009F006F /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		F0B365E423B509A5009F006F /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		F0BE5EC923B5AAA800088FC3 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		F0BE5ECB23B5DEA700088FC3 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		F0BE5ECD23B5DF0100088FC3 /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		F0BE5ECF23B5DF2F00088FC3 /* ChatInputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputContainerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				F05F260423B4F67B00F46C8C /* User.swift */,
+				F0B365E123B50905009F006F /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -165,6 +180,7 @@
 		F0A9D7C823B4870F003D5E90 /* FireChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				F0B365E323B50987009F006F /* View */,
 				F05F260323B4F66500F46C8C /* Model */,
 				F005E51E23B4AB5900EC59D8 /* Extensions */,
 				F0A9D7F723B48823003D5E90 /* GoogleService-Info.plist */,
@@ -177,6 +193,9 @@
 				F005E52123B4B2E500EC59D8 /* LoginViewController.swift */,
 				F005E52323B4B3C000EC59D8 /* LandingViewController.swift */,
 				F005E52523B4B3EF00EC59D8 /* RegistrationViewController.swift */,
+				F0B365DF23B508B8009F006F /* NewMessageTableViewController.swift */,
+				F0BE5EC923B5AAA800088FC3 /* HomeController.swift */,
+				F0BE5ECB23B5DEA700088FC3 /* ChatLogController.swift */,
 			);
 			path = FireChatApp;
 			sourceTree = "<group>";
@@ -197,6 +216,16 @@
 				F0A9D7EB23B48714003D5E90 /* Info.plist */,
 			);
 			path = FireChatAppUITests;
+			sourceTree = "<group>";
+		};
+		F0B365E323B50987009F006F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F0B365E423B509A5009F006F /* UserCell.swift */,
+				F0BE5ECD23B5DF0100088FC3 /* ChatCollectionViewCell.swift */,
+				F0BE5ECF23B5DF2F00088FC3 /* ChatInputContainerView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -439,12 +468,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0BE5ECC23B5DEA700088FC3 /* ChatLogController.swift in Sources */,
 				F005E52623B4B3EF00EC59D8 /* RegistrationViewController.swift in Sources */,
+				F0BE5ECE23B5DF0100088FC3 /* ChatCollectionViewCell.swift in Sources */,
 				F005E52223B4B2E500EC59D8 /* LoginViewController.swift in Sources */,
+				F0BE5ECA23B5AAA800088FC3 /* HomeController.swift in Sources */,
+				F0BE5ED023B5DF2F00088FC3 /* ChatInputContainerView.swift in Sources */,
 				F0A9D7CC23B4870F003D5E90 /* ViewController.swift in Sources */,
+				F0B365E223B50905009F006F /* Message.swift in Sources */,
 				F005E52023B4AB7600EC59D8 /* Extensions.swift in Sources */,
+				F0B365E023B508B8009F006F /* NewMessageTableViewController.swift in Sources */,
 				F005E52423B4B3C000EC59D8 /* LandingViewController.swift in Sources */,
 				F0A9D7CA23B4870F003D5E90 /* AppDelegate.swift in Sources */,
+				F0B365E523B509A5009F006F /* UserCell.swift in Sources */,
 				F05F260523B4F67B00F46C8C /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,7 @@ class User: NSObject
     var Email: String?
     var Username: String?
     var ProfileImage: String?
+    var Password: String?
     
     init(dictionary: [String: AnyObject])
     {
@@ -22,5 +23,6 @@ class User: NSObject
         self.Email = dictionary["Email"] as? String
         self.Username = dictionary["Username"] as? String
         self.ProfileImage = dictionary["ProfileImageUrl"] as? String
+        self.Password = dictionary["Password"] as? String
     }
 }

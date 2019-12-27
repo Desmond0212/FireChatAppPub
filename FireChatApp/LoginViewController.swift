@@ -26,6 +26,8 @@ extension UIViewController
 
 class LoginViewController: UIViewController
 {
+    var messageViewController: LandingViewController?
+    
     let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "chat_icon8")
@@ -76,6 +78,17 @@ class LoginViewController: UIViewController
         button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
         return button
     }()
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle
+    {
+        return .lightContent
+    }
     
     override func viewDidLoad()
     {
@@ -128,28 +141,37 @@ class LoginViewController: UIViewController
             passwordTextField.text = ""
         }
         
-        navigationController?.pushViewController(RegistrationViewController(), animated: true)
+        print("Desmond Debug ahndleShowSignup")
+        
+        let registerController = RegistrationViewController()
+        self.present(registerController, animated: true, completion: nil)
+        //navigationController?.pushViewController(RegistrationViewController(), animated: true)
     }
     
     func logUserIn(withEmail email: String, password: String)
     {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
             
-            if let error = error
+            if (error != nil)
             {
-                print("Failed to sign user in with error: ", error.localizedDescription)
+                print("Failed to sign user in with error: ", error!.localizedDescription)
                 return
             }
-            
-            guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
-            guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
-            
-            /*controller.configureViewComponents()*/
-            
-            // forgot to add this in video
-            /*controller.loadUserData()*/
-            
-            self.dismiss(animated: true, completion: nil)
+            else
+            {
+                guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
+                guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
+
+                //controller.configureViewComponents()
+
+                // forgot to add this in video
+                //controller.loadUserData()
+                
+//                self.messageViewController?.fetchUserAndSetupNavBarTitle()
+                controller.fetchUserAndSetupNavBarTitle()
+                
+                self.dismiss(animated: true, completion: nil)
+            }
         }
     }
     
@@ -157,6 +179,7 @@ class LoginViewController: UIViewController
     {
         view.backgroundColor = UIColor.mainBlue()
         navigationController?.navigationBar.isHidden = true
+        UITabBar.appearance().barTintColor = .white
         
         view.addSubview(logoImageView)
         logoImageView.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 100, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 150, height: 100)
