@@ -28,6 +28,22 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
 {
     var messageViewController: LandingViewController?
     
+    let activityIndicatorViewRegister: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        aiv.translatesAutoresizingMaskIntoConstraints = false
+        aiv.hidesWhenStopped = true
+        
+        return aiv
+    }()
+    
+    let transparentViewRegister: UIView = {
+        let transparent = UIView()
+        transparent.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        transparent.translatesAutoresizingMaskIntoConstraints = false
+        
+        return transparent
+    }()
+    
     let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "add-profile-image7")
@@ -105,6 +121,9 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        activityIndicatorViewRegister.isHidden = true
+        transparentViewRegister.isHidden = true
+        
         configureViewComponents()
         
         //To dismiss keyboard.
@@ -180,6 +199,11 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     
     @objc func handleSignUp()
     {
+        DismissKeyboar()
+        transparentViewRegister.isHidden = false
+        activityIndicatorViewRegister.isHidden = false
+        activityIndicatorViewRegister.startAnimating()
+        
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let username = usernameTextField.text else { return }
@@ -249,14 +273,25 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
             if (err != nil)
             {
                 print (err!)
+                self.transparentViewRegister.isHidden = true
+                self.activityIndicatorViewRegister.isHidden = true
+                self.activityIndicatorViewRegister.stopAnimating()
+                
                 return
             }
             else
             {
                 print ("Successfully Saved User to Firebase Database!")
                 
+                self.transparentViewRegister.isHidden = true
+                self.activityIndicatorViewRegister.isHidden = true
+                self.activityIndicatorViewRegister.stopAnimating()
+                
                 let user = User(dictionary: values)
-                self.messageViewController?.setupNavBarWithUser(user: user)
+                guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
+                guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
+                
+                controller.setupNavBarWithUser(user: user)
                 self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         })
@@ -292,5 +327,21 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 32, paddingBottom: 12, paddingRight: 32, width: 0, height: 50)
+        
+        view.addSubview(transparentViewRegister)
+        
+        //Constraint of Transparent for LoadingView
+        transparentViewRegister.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        transparentViewRegister.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        transparentViewRegister.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        transparentViewRegister.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        
+        view.addSubview(activityIndicatorViewRegister)
+        
+        //Constraint of Login LoadingView
+        activityIndicatorViewRegister.centerXAnchor.constraint(equalTo: transparentViewRegister.centerXAnchor).isActive = true
+        activityIndicatorViewRegister.centerYAnchor.constraint(equalTo: transparentViewRegister.centerYAnchor).isActive = true
+        activityIndicatorViewRegister.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        activityIndicatorViewRegister.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }

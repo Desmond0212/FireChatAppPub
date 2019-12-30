@@ -28,6 +28,22 @@ class LoginViewController: UIViewController
 {
     var messageViewController: LandingViewController?
     
+    let activityIndicatorViewLogin: UIActivityIndicatorView = {
+        let aiv = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        aiv.translatesAutoresizingMaskIntoConstraints = false
+        aiv.hidesWhenStopped = true
+        
+        return aiv
+    }()
+    
+    let transparentViewLogin: UIView = {
+        let transparent = UIView()
+        transparent.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        transparent.translatesAutoresizingMaskIntoConstraints = false
+        
+        return transparent
+    }()
+    
     let logoImageView: UIImageView = {
         let iv = UIImageView()
         iv.image = #imageLiteral(resourceName: "profile_image_1")
@@ -95,6 +111,9 @@ class LoginViewController: UIViewController
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        transparentViewLogin.isHidden = true
+        activityIndicatorViewLogin.isHidden = true
+        
         configureViewComponents()
         
         //To dismiss keyboard.
@@ -123,6 +142,11 @@ class LoginViewController: UIViewController
     
     @objc func handleLogin()
     {
+        DismissKeyboard()
+        transparentViewLogin.isHidden = false
+        activityIndicatorViewLogin.isHidden = false
+        activityIndicatorViewLogin.startAnimating()
+        
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         
@@ -151,6 +175,9 @@ class LoginViewController: UIViewController
             
             if (error != nil)
             {
+                self.transparentViewLogin.isHidden = true
+                self.activityIndicatorViewLogin.isHidden = true
+                self.activityIndicatorViewLogin.stopAnimating()
                 print("Failed to sign user in with error: ", error!.localizedDescription)
                 return
             }
@@ -158,6 +185,10 @@ class LoginViewController: UIViewController
             {
                 guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
                 guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
+                
+                self.transparentViewLogin.isHidden = true
+                self.activityIndicatorViewLogin.isHidden = true
+                self.activityIndicatorViewLogin.stopAnimating()
                 
                 controller.fetchUserAndSetupNavBarTitle()
                 self.dismiss(animated: true, completion: nil)
@@ -186,5 +217,21 @@ class LoginViewController: UIViewController
         
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 32, paddingBottom: 12, paddingRight: 32, width: 0, height: 50)
+        
+        view.addSubview(transparentViewLogin)
+        
+        //Constraint of Transparent for LoadingView
+        transparentViewLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        transparentViewLogin.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        transparentViewLogin.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        transparentViewLogin.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        
+        view.addSubview(activityIndicatorViewLogin)
+        
+        //Constraint of Login LoadingView
+        activityIndicatorViewLogin.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicatorViewLogin.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicatorViewLogin.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        activityIndicatorViewLogin.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
