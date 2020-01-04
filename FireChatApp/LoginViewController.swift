@@ -24,7 +24,7 @@ extension UIViewController
     }
 }
 
-class LoginViewController: UIViewController
+class LoginViewController: UIViewController, UITextFieldDelegate
 {
     var messageViewController: LandingViewController?
     
@@ -123,6 +123,62 @@ class LoginViewController: UIViewController
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        setLoginButton(enabled: false)
+        
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+    }
+    
+    @objc func textFieldChanged(_ target:UITextField)
+    {
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        let formFilled = email != nil && email != "" && password != nil && password != ""
+        
+        setLoginButton(enabled: formFilled)
+    }
+    
+    /**
+     Enables or Disables the Login Button
+     */
+    func setLoginButton(enabled: Bool)
+    {
+        if enabled
+        {
+            loginButton.alpha = 1.0
+            loginButton.isEnabled = true
+        }
+        else
+        {
+            loginButton.alpha = 0.5
+            loginButton.isEnabled = false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Resigns the target textField and assigns the next textField in the form.
+        switch textField
+        {
+            case emailTextField:
+                emailTextField.resignFirstResponder()
+                passwordTextField.becomeFirstResponder()
+                break
+            
+            case passwordTextField:
+                passwordTextField.resignFirstResponder()
+                loginButton.becomeFirstResponder()
+                view.frame.origin.y = 0
+                break
+            
+            default:
+                break
+        }
+        
+        return true
     }
     
     //stop listener for keyboard show/hide events.

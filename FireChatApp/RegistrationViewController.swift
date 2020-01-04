@@ -24,9 +24,10 @@ extension UIViewController
     }
 }
 
-class RegistrationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class RegistrationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate
 {
     var messageViewController: LandingViewController?
+    var imgProfileSelected = false
     
     let activityIndicatorViewRegister: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -133,6 +134,16 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillShow/*UIResponder.keyboardWillShowNotification*/, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillHide/*UIResponder.keyboardWillHideNotification*/, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame/*UIResponder.keyboardWillChangeFrameNotification*/, object: nil)
+        
+        imgProfileSelected = false
+        setRegisterButton(enabled: false)
+        
+        emailTextField.delegate = self
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+        emailTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -144,6 +155,72 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     override var preferredStatusBarStyle: UIStatusBarStyle
     {
         return .lightContent
+    }
+    
+    @objc func textFieldChanged(_ target:UITextField)
+    {
+        let email = emailTextField.text
+        let username = usernameTextField.text
+        let password = passwordTextField.text
+        let formFilled = imgProfileSelected == true && email != nil && email != "" && username != nil && username != "" && password != nil && password != ""
+        
+        setRegisterButton(enabled: formFilled)
+    }
+    
+    func checkingTextField()
+    {
+        let email = emailTextField.text
+        let username = usernameTextField.text
+        let password = passwordTextField.text
+        
+        let fromFilled = email != nil && email != "" && username != nil && username != "" && password != nil && password != ""
+        
+        setRegisterButton(enabled: fromFilled)
+    }
+    
+    /**
+     Enables or Disables the Login Button
+     */
+    func setRegisterButton(enabled: Bool)
+    {
+        if enabled
+        {
+            loginButton.alpha = 1.0
+            loginButton.isEnabled = true
+        }
+        else
+        {
+            loginButton.alpha = 0.5
+            loginButton.isEnabled = false
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Resigns the target textField and assigns the next textField in the form.
+        switch textField
+        {
+            case emailTextField:
+                emailTextField.resignFirstResponder()
+                usernameTextField.becomeFirstResponder()
+                break
+            
+            case usernameTextField:
+                usernameTextField.resignFirstResponder()
+                passwordTextField.becomeFirstResponder()
+                break
+            
+            case passwordTextField:
+                passwordTextField.resignFirstResponder()
+                loginButton.becomeFirstResponder()
+                view.frame.origin.y = 0
+                break
+            
+            default:
+                break
+        }
+        
+        return true
     }
     
     //Open Galary to Select Image.
@@ -160,6 +237,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController)
     {
         dismiss(animated: true, completion: nil)
+        imgProfileSelected = false
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
@@ -177,6 +255,8 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
         if let selectedImage = selectedImageFromPicker
         {
             logoImageView.image = selectedImage
+            imgProfileSelected = true
+            checkingTextField()
         }
         
         dismiss(animated: true, completion: nil)
@@ -276,6 +356,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                 self.transparentViewRegister.isHidden = true
                 self.activityIndicatorViewRegister.isHidden = true
                 self.activityIndicatorViewRegister.stopAnimating()
+                self.imgProfileSelected = false
                 
                 return
             }
@@ -286,6 +367,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                 self.transparentViewRegister.isHidden = true
                 self.activityIndicatorViewRegister.isHidden = true
                 self.activityIndicatorViewRegister.stopAnimating()
+                self.imgProfileSelected = false
                 
                 let user = User(dictionary: values)
                 guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }

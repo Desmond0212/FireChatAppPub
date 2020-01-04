@@ -125,6 +125,7 @@ class ChatCollectionViewCell: UICollectionViewCell
         
         playerLayer?.removeFromSuperlayer()
         player?.pause()
+        player?.replaceCurrentItem(with: nil)
         activityIndicatorView.stopAnimating()
     }
     

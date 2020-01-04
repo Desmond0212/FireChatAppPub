@@ -93,6 +93,7 @@ class UserCell: UITableViewCell
         detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 4, width: 200/*detailTextLabel!.frame.width*/, height: detailTextLabel!.frame.height)
         
         textLabel?.textColor = .white
+        textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         detailTextLabel?.textColor = .white
     }
     

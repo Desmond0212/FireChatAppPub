@@ -20,6 +20,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var startingFrame: CGRect?
     var blackBackgroundView: UIView?
     var startingImageView: UIImageView?
+    var player: AVPlayer?
     
     var user: User?
     {
@@ -267,6 +268,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        player?.pause()
+        player?.replaceCurrentItem(with: nil)
     }
     
     func setupKeyboardObservers()
