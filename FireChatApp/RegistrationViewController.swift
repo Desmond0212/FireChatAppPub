@@ -22,6 +22,16 @@ extension UIViewController
         view.endEditing(true)
         view.frame.origin.y = 0
     }
+    
+    func showAlertRegister(title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(action)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 class RegistrationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate
@@ -357,6 +367,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                 self.activityIndicatorViewRegister.isHidden = true
                 self.activityIndicatorViewRegister.stopAnimating()
                 self.imgProfileSelected = false
+                self.showAlertRegister(title: "Registration Failed", message: "Service is currently not available, please try again later.")
                 
                 return
             }
@@ -373,7 +384,7 @@ class RegistrationViewController: UIViewController, UIImagePickerControllerDeleg
                 guard let navController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController else { return }
                 guard let controller = navController.viewControllers[0] as? LandingViewController else { return }
                 
-                controller.setupNavBarWithUser(user: user)
+                controller.setupNavBarWithUserFromRegister(user: user)
                 self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
             }
         })

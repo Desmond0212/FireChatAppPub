@@ -22,6 +22,16 @@ extension UIViewController
         view.endEditing(true)
         view.frame.origin.y = 0
     }
+    
+    func showAlertLogin(title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(action)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 class LoginViewController: UIViewController, UITextFieldDelegate
@@ -235,6 +245,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate
                 self.activityIndicatorViewLogin.isHidden = true
                 self.activityIndicatorViewLogin.stopAnimating()
                 print("Failed to sign user in with error: ", error!.localizedDescription)
+                self.showAlertLogin(title: "Login Failed", message: "Invalid email address or password, please try again.")
+                
                 return
             }
             else

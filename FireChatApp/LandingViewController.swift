@@ -17,6 +17,35 @@ class LandingViewController: UITableViewController
     let cellId = "cellId"
     var homeController: HomeController?
     
+    let backgroundView: UIView = {
+        let transparent = UIView()
+        transparent.backgroundColor = UIColor.clear
+        transparent.translatesAutoresizingMaskIntoConstraints = false
+        
+        return transparent
+    }()
+    
+    let emptyIconImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = #imageLiteral(resourceName: "baseline_speaker_notes_off_white_48pt")
+        //iv.layer.cornerRadius = 24
+        //iv.layer.masksToBounds = true
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        return iv
+    }()
+    
+    let lblEmptyChat: UILabel = {
+        let label = UILabel()
+        label.text = "Yout don't have any chat yet."
+        label.font = UIFont.italicSystemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor.white
+        
+        return label
+    }()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -37,6 +66,31 @@ class LandingViewController: UITableViewController
         tableView.allowsSelectionDuringEditing = true
     }
     
+    func emptyChatComponents()
+    {
+        backgroundView.isHidden = false
+        lblEmptyChat.isHidden = false
+        emptyIconImage.isHidden = false
+        
+        view.addSubview(backgroundView)
+        backgroundView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        backgroundView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        backgroundView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        backgroundView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        
+        view.addSubview(lblEmptyChat)
+        lblEmptyChat.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor).isActive = true
+        lblEmptyChat.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor).isActive = true
+        lblEmptyChat.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        view.addSubview(emptyIconImage)
+        emptyIconImage.centerXAnchor.constraint(equalTo: lblEmptyChat.centerXAnchor).isActive = true
+        emptyIconImage.bottomAnchor.constraint(equalTo: lblEmptyChat.topAnchor, constant: 10).isActive = true
+        //emptyIconImage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        emptyIconImage.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        emptyIconImage.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
     func observeUserMessages()
     {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -52,6 +106,8 @@ class LandingViewController: UITableViewController
             Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: {(snapshot) in
                 
                 print(snapshot)
+                
+                self.hideAllEmptyComponents()
                 
                 let messageId = snapshot.key
                 self.fetchMessageWithMessageId(messageId: messageId)
@@ -69,6 +125,13 @@ class LandingViewController: UITableViewController
             self.attemptReloadOfTable()
             
         }, withCancel: nil)
+    }
+    
+    private func hideAllEmptyComponents()
+    {
+        backgroundView.isHidden = true
+        lblEmptyChat.isHidden = true
+        emptyIconImage.isHidden = true
     }
     
     private func attemptReloadOfTable()
@@ -299,6 +362,63 @@ class LandingViewController: UITableViewController
         
         // titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
         titleView.isUserInteractionEnabled = true
+    }
+    
+    func setupNavBarWithUserFromRegister(user: User)
+    {
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
+        
+        //self.navigationItem.title = user.Username
+        let titleView = UIView()
+        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleView.addSubview(containerView)
+        
+        let profileImageView = UIImageView()
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.clipsToBounds = true
+        if let profileImageUrl = user.ProfileImage {
+            
+            profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        
+        containerView.addSubview(profileImageView)
+        
+        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let nameLabel = UILabel()
+        nameLabel.text = user.Username
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.textColor = .white
+        
+        containerView.addSubview(nameLabel)
+        
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 8).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+        
+        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        
+        self.navigationItem.titleView = titleView
+        
+        // titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+        titleView.isUserInteractionEnabled = true
+        
+        emptyChatComponents()
     }
     
     @objc func showChatControllerForUser(_ user: User)
