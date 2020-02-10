@@ -89,7 +89,7 @@ class UserCell: UITableViewCell
     {
         super.layoutSubviews()
         
-        textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 4, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 70, y: textLabel!.frame.origin.y - 4, width: 200, height: textLabel!.frame.height)
         detailTextLabel?.frame = CGRect(x: 70, y: detailTextLabel!.frame.origin.y + 4, width: 200/*detailTextLabel!.frame.width*/, height: detailTextLabel!.frame.height)
         
         textLabel?.textColor = .white
